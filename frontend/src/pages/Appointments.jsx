@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import axiosInstance from '../axiosConfig';
 import { useAuth } from '../context/AuthContext';
 import AppointmentList from '../components/AppointmentList';
@@ -11,17 +11,16 @@ const Appointments = () => {
   const [appointments, setAppointments] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
-  
-  const fetchAppointments = async () => {
+ 
+  const fetchAppointments = useCallback(async () => {
     try {
-      const response = await axiosInstance.get('/api/appointments', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setAppointments(response.data);
+      const response = await fetch("/api/appointments");
+      const data = await response.json();
+      setAppointments(data);
     } catch (error) {
-      alert('Failed to fetch appointments.');
+      console.error("Error fetching appointments:", error);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchAppointments();

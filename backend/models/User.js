@@ -5,9 +5,11 @@ const bcrypt = require('bcrypt');
 const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
+    phone: { type: String },
     password: { type: String, required: true },
-    university: { type: String },
     address: { type: String },
+    dateOfBirth: { type: Date },
+    gender: { type: String, enum: ['Male', 'Female'] },
 });
 
 userSchema.pre('save', async function (next) {

@@ -1,5 +1,4 @@
 import { useCallback, useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
 import AppointmentList from '../components/AppointmentList';
 import AppointmentModal from '../components/AppointmentModal';
 import { IconButton, Box } from '@mui/material';

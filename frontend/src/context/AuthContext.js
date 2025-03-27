@@ -1,20 +1,31 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
+import Cookies from 'js-cookie';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
+  
+  // using UseEffect to prevent from logging out when refreshing the page
+  useEffect(() => {
+    const token = Cookies.get('access_token');
+    if (token) {
+      setToken(token);
+    }
+  }, []);
 
   const login = (userData) => {
-    setUser(userData);
+    setToken(userData.token);
+    Cookies.set('access_token', userData.token, { expires: 1 });
   };
 
   const logout = () => {
-    setUser(null);
+    setToken(null);
+    Cookies.remove('access_token')
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ token, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

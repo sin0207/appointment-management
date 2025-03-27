@@ -25,7 +25,7 @@ const Appointments = () => {
 
   useEffect(() => {
     fetchAppointments();
-  }, [token]);
+  }, [fetchAppointments]);
 
   const handleCreateAppointment = () => {
     setSelectedAppointment(null);

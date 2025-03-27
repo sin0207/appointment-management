@@ -1,5 +1,4 @@
 import { useCallback, useState, useEffect } from 'react';
-import axiosInstance from '../axiosConfig';
 import { useAuth } from '../context/AuthContext';
 import AppointmentList from '../components/AppointmentList';
 import AppointmentModal from '../components/AppointmentModal';
@@ -7,7 +6,6 @@ import { IconButton, Box } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
 const Appointments = () => {
-  const { token } = useAuth();
   const [appointments, setAppointments] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedAppointment, setSelectedAppointment] = useState(null);

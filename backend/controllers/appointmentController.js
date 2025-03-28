@@ -8,7 +8,6 @@ const createAppointment = async (req, res, next) => {
       patient: req.user._id,
       ...req.body
     });
-    appointment.save();
 
     res.status(201).json(appointment);
   } catch (error) {

@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Appointment Management System allows users to schedule, update, and manage appointments. It features user authentication, a responsive frontend, and an admin panel for managing user accounts.
+The Appointment Management System allows users to schedule, update, and manage appointments. It features user authentication, a responsive frontend, and an user can update the details.
 
 ## Features
 

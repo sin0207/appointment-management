@@ -30,17 +30,15 @@ jobs:
     - name: Install Backend Dependencies
       working-directory: ./backend
       run: | 
-       npm install --global yarn
-       yarn --version
-       yarn install
+       npm install
       
     - name: Install Frontend Dependencies
       working-directory: ./frontend
       run: |
         df -h
         sudo rm -rf ./build
-        yarn install
-        yarn run build
+        npm install
+        npm run build
 
 
     - name: Run Backend Tests

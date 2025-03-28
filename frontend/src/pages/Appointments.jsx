@@ -3,21 +3,25 @@ import AppointmentList from '../components/AppointmentList';
 import AppointmentModal from '../components/AppointmentModal';
 import { IconButton, Box } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import { useAuth } from '../context/AuthContext';
+import axiosInstance from '../axiosConfig';
 
 const Appointments = () => {
+  const { token } = useAuth();
   const [appointments, setAppointments] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
- 
+
   const fetchAppointments = useCallback(async () => {
-    try {
-      const response = await fetch("/api/appointments");
-      const data = await response.json();
-      setAppointments(data);
-    } catch (error) {
-      console.error("Error fetching appointments:", error);
-    }
-  }, []);
+  try {
+    const response = await axiosInstance.get("/api/appointments", {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    setAppointments(response.data);
+  } catch (error) {
+    console.error("Error fetching appointments:", error);
+  }
+}, [token]);
 
   useEffect(() => {
     fetchAppointments();

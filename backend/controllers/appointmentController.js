@@ -60,4 +60,19 @@ const cancelAppointment = async (req, res, next) => {
   }
 }
 
-module.exports = { createAppointment, getAppointments, updateAppointment, cancelAppointment };
+const deleteAppointment  = async (req, res, next) => {
+  try {
+    const appointment = await Appointment.findById(req.params.id);
+
+    if(!appointment) {
+      throw new NotFoundError('Appointment not found');
+    }
+
+    await appointment.remove();
+    res.status(204).end();
+  } catch (error) {
+    next(error);
+  }
+}
+
+module.exports = { createAppointment, getAppointments, updateAppointment, cancelAppointment, deleteAppointment };

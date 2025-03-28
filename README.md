@@ -1,68 +1,50 @@
-# **Assignment: Full-Stack CRUD Application Development with DevOps Practices**
+# Appointment Management System
 
-## **Objective**
+## Overview
 
-You have been provided with a starter project that includes user authentication using  **Node.js, React.js, and MongoDB**. Your task is to extend this application by implementing **CRUD (Create, Read, Update, Delete) operations** for a real-world application of your choice, while following industry best practices such as:
+The Appointment Management System allows users to schedule, update, and manage appointments. It features user authentication, a responsive frontend, and an admin panel for managing user accounts.
 
-* **Project Management with JIRA**
-* **Requirement Diagram using SysML**
-* **Version Control using GitHub**
-* **CI/CD Integration for Automated Deployment**
+## Features
 
-## **Requirements**
+- User authentication with JWT
+- Full CRUD functionality for appointments
+- Admin panel for managing users
+- Responsive UI
 
-### **1. Choose a Real-World Application**
+## Installation
 
-Select a meaningful use case for your CRUD operations. We will provide the list, you have to select it.
+### Prerequisites
 
-### **2. Project Management with JIRA and SysML**
+- Node.js
+- MongoDB
 
-* Create a **JIRA project** and define:
-  * **Epic**
-  * **User Stories** (features required in your app)
-  * **Child issues & Subtasks** (breaking down development work)
-  * **Sprint Planning** (organizing work into milestones)
-* Document your JIRA **board URL** in the project README.
-* Draw a requirements diagram
+### Setup
 
-### **3. Backend Development (Node.js + Express + MongoDB)**
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/sin0207/appointment-management.git
+   ```
 
-* Create a user-friendly interface to interact with your API (Some portion developed, follow task manager app)).
-* Implement **forms** for adding and updating records.
-* Display data using  **tables, cards, or lists (Follow how we showed data in task manager app)**
+2. Install Backend & Frontend Dependencies:
+    ```bash
+    npm run install-all
+    ```
 
-### **4. Frontend Development (React.js)**
+3. Create a .env file in the backend and set your MongoDB URI and JWT secret.
 
-* Create a user-friendly interface to interact with your API (**Some portion developed, follow task manager app)**.
-* Implement **forms** for adding, showing, deleting and updating records (CRUD).
-* Display data using  **tables, cards, or lists (Follow how we showed data in task manager app)**
+4. Update the backend url in the frontend axiosConfig file if you change the port or network setting.
 
-### **5. Authentication & Authorization**
+5. Run the application:
+    ```bash
+    npm run start
+    ```
+## CI/CD Pipeline
 
-* Ensure **only authenticated users** can access and perform CRUD operations. (Already developed in your project)
-* Use **JWT (JSON Web Tokens)** for user authentication (Use the task manager one from .env file).
-
-### **6. GitHub Version Control & Branching Strategy**
-
-* Use **GitHub for version control** and maintain:
-  * `main` branch (stable production-ready code)
-  * Feature branches (`feature/xyz`) for each new functionality
-* Follow proper **commit messages** and  **pull request (PR) reviews** .
-
-### **7. CI/CD Pipeline Setup**
-
-* Implement a **CI/CD pipeline using GitHub Actions** to:
-  * Automatically **run tests** on every commit/pull request (Optional).
-  * Deploy the **backend** to **AWS** .
-  * Deploy the **frontend** to **AWS**.
-* Document your  **CI/CD workflow in the README** .
-
-## **Submission Requirements**
-
-* **JIRA Project Board URL** (user stories ).
-* **Requirment diagram** (Using project features)
-* **GitHub Repository** (`backend/` and `frontend/`).
-* **README.md** with:
-
-  * Project setup instructions.
-  * CI/CD pipeline details.
+-	Checkout code: checkout the latest code from github by using version 3 of actions/checkout container
+-	Setup Node.js: setup the environment in node@22
+-	Stop the running pm2 processes on the AWS EC2
+-	Install Backend Dependencies: using npm to install all dependencies
+-	Install Frontend Dependencies: using npm to install all dependencies
+-	Run Backend Tests: run tests on the backend side
+-	Copy all env variables to the .env for backend server
+-	Restart all pm2 services for deployed version

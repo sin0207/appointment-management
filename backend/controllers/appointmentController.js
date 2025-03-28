@@ -1,5 +1,6 @@
 const Appointment = require('../models/Appointment');
 const NotFoundError = require("../errors/NotFoundError");
+const ForbiddenError = require("../errors/ForbiddenError");
 
 const createAppointment = async (req, res, next) => {
   try {
@@ -25,17 +26,29 @@ const getAppointments = async (req, res, next) => {
   }
 }
 
+const findAppointment = async (appointmentId, user) => {
+  const appointment = await Appointment.findById(appointmentId);
+  if(!appointment) {
+    throw new NotFoundError('Appointment not found');
+  }
+
+  if(appointment.patient.toString() !== user.id) {
+    throw new ForbiddenError('You cannot access this appointment');
+  }
+
+  return appointment;
+};
+
 const updateAppointment = async (req, res, next) => {
   try {
-    const appointment = await Appointment.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
+    const appointment = await findAppointment(req.params.id, req.user);
 
-    if(!appointment) {
-      throw new NotFoundError('Appointment not found');
+    if(appointment.status === 'Cancelled') {
+      throw new Error('Cancelled appointment cannot be updated');
     }
+
+    appointment.set(req.body);
+    appointment.save();
 
     res.status(200).json(appointment);
   } catch (error) {
@@ -45,10 +58,10 @@ const updateAppointment = async (req, res, next) => {
 
 const cancelAppointment = async (req, res, next) => {
   try {
-    const appointment = await Appointment.findById(req.params.id);
+    const appointment = await findAppointment(req.params.id, req.user);
 
-    if(!appointment) {
-      throw new NotFoundError('Appointment not found');
+    if(appointment.status === 'Cancelled') {
+      throw new Error('Cancelled appointment cannot be updated');
     }
 
     appointment.status = 'Cancelled';
@@ -62,10 +75,10 @@ const cancelAppointment = async (req, res, next) => {
 
 const deleteAppointment  = async (req, res, next) => {
   try {
-    const appointment = await Appointment.findById(req.params.id);
+    const appointment = await findAppointment(req.params.id, req.user);
 
-    if(!appointment) {
-      throw new NotFoundError('Appointment not found');
+    if(appointment.status === 'Created') {
+      throw new Error('Created appointment cannot be deleted');
     }
 
     await appointment.remove();
